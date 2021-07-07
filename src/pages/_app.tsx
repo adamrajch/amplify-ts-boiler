@@ -2,6 +2,7 @@ import Amplify from "aws-amplify";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import React, { useEffect } from "react";
+import { Chakra } from "../../styles/chakra";
 import awsconfig from "../aws-exports";
 import AuthContext from "../context/AuthContext";
 Amplify.configure({ ...awsconfig, ssr: true });
@@ -25,9 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <AuthContext>
-        <>
+        <Chakra cookies={pageProps.cookies}>
           <Component {...pageProps} />
-        </>
+        </Chakra>
       </AuthContext>
     </React.Fragment>
   );
