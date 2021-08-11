@@ -1,13 +1,11 @@
-import Amplify from "aws-amplify";
-import type { AppProps } from "next/app";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { AppProps } from "next/app";
 import Head from "next/head";
 import React, { useEffect } from "react";
-import { Chakra } from "../../styles/chakra";
-import awsconfig from "../aws-exports";
-import AuthContext from "../context/AuthContext";
-Amplify.configure({ ...awsconfig, ssr: true });
+import theme from "../theme";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -19,19 +17,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <React.Fragment>
       <Head>
-        <title>Your Amplify App</title>
+        <title>MUI Next Boiler</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <AuthContext>
-        <Chakra cookies={pageProps.cookies}>
-          <Component {...pageProps} />
-        </Chakra>
-      </AuthContext>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </React.Fragment>
   );
 }
-
-export default MyApp;
